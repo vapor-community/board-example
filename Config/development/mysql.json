@@ -1,0 +1,8 @@
+{
+	"host": "localhost",
+	"user": "root",
+	"password": "",
+	"database": "vapor_board",
+	"port": 3306,
+	"flag": 0
+}
