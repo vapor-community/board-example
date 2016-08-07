@@ -16,14 +16,6 @@ public final class Post: Model {
     public convenience init(text: String, user: User?) {
         self.init(text: text, userId: user?.id)
     }
-	
-	public static func prepare(_ database: Database) throws {
-		// TODO: Remove
-	}
-	
-	public static func revert(_ database: Database) throws {
-		// TODO: Remove
-	}
 }
 
 // MARK: Node Conversions
@@ -41,8 +33,7 @@ extension Post {
         return try Node(node: [
             "id": id,
             "text": text,
-            "user": try user().get(),
-//            "user_id": userId
+            "user_id": userId
         ])
     }
 }
@@ -53,4 +44,37 @@ extension Post {
     func user() throws -> Parent<User> {
         return try parent(userId, User.self)
     }
+}
+
+/**
+	Here, we must make the Post object
+	usable from the Mustache documents,
+	so we have to tell Mustache how this
+	data behaves.
+*/
+extension Post: MustacheBoxable {
+	public var mustacheBox: MustacheBox {
+		return MustacheBox(
+			value: self,
+			boolValue: nil,
+			keyedSubscript: keyedSubscriptFunction,
+			filter: nil,
+			render: nil,
+			willRender: nil,
+			didRender: nil
+		)
+	}
+	
+	func keyedSubscriptFunction(key: String) -> MustacheBox {
+		switch key {
+		case "id":
+			return (id?.int?.mustacheBox)!
+		case "text":
+			return text.mustacheBox
+		case "user":
+			return try! user().get()!.mustacheBox
+		default:
+			return Box()
+		}
+	}
 }

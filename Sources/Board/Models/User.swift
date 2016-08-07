@@ -10,14 +10,6 @@ public final class User: Model {
         self.id = id
         self.name = name
     }
-	
-	public static func prepare(_ database: Database) throws {
-		// TODO: Remove
-	}
-	
-	public static func revert(_ database: Database) throws {
-		// TODO: Remove
-	}
 }
 
 // MARK: Node Conversions
@@ -48,4 +40,37 @@ extension User {
     func postCount() throws -> Int {
         return try children(Post.self).all().count // TODO: Make more efficient? Raw query?
     }
+}
+
+/**
+	Here, we must make the Post object
+	usable from the Mustache documents,
+	so we have to tell Mustache how this
+	data behaves.
+*/
+extension User: MustacheBoxable {
+	public var mustacheBox: MustacheBox {
+		return MustacheBox(
+			value: self,
+			boolValue: nil,
+			keyedSubscript: keyedSubscriptFunction,
+			filter: nil,
+			render: nil,
+			willRender: nil,
+			didRender: nil
+		)
+	}
+	
+	func keyedSubscriptFunction(key: String) -> MustacheBox {
+		switch key {
+		case "id":
+			return (id?.int?.mustacheBox)!
+		case "name":
+			return name.mustacheBox
+		case "post-count":
+			return try! postCount().mustacheBox
+		default:
+			return Box()
+		}
+	}
 }

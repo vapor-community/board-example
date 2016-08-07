@@ -49,8 +49,8 @@ public final class BoardController {
         var post = Post(text: text, user: user)
         try post.save()
         
-        // Reidrect to /board
-        return Response(redirect: "/board")
+        // Reidrect to /
+        return Response(redirect: "/")
     }
 }
 

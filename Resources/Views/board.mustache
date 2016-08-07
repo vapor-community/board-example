@@ -16,7 +16,7 @@
 					{{#posts}}
 					<tr>
 						<td>
-							<span class="username">{{user.name}}</span>
+							<b><span class="username">{{user.name}}</span></b>
 							<span class="post-count">{{user.post-count}}</span>
 						</td>
 						<td>
@@ -27,7 +27,7 @@
 				</tbody>
 			</table>
 
-			<form class="submit-form" action="board" method="post">
+			<form class="submit-form" action="/" method="post">
 				<input type="text" id="username-input" name="username" placeholder="Username..."><br/>
 				<textarea id="text-input" id="text" name="text" placeholder="Text..."></textarea>
 				<button type="submit">Post</button>
