@@ -9,6 +9,13 @@ Check out the [live demo](http://example.qutheory.io) running on Ubuntu.
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Slack Status](http://slack.qutheory.io/badge.svg?style=flat-square)](http://slack.qutheory.io)
 
+## Todo
+[ ] Authentication/login
+[ ] Prettify the frontend
+[ ] Username and text validation
+[ ] Replies (demonstrate sibling relationships)
+[ ] Error page
+
 ## Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
@@ -37,13 +44,13 @@ Visit [Getting Started](http://docs.qutheory.io) in the documentation.
 
 If you have the [Vapor Toolbox](https://github.com/qutheory/vapor-toolbox), use `vapor new <project-name>` to create your new application.
 
-Then run `vapor build` and `vapor run`.
+Then run `vapor build --mysql` and `vapor run`.
 
 Otherwise, clone this repo and run `swift build` to compile your application, then run `.build/debug/App`.
 
 ### Xcode 8
 
-Run `vapor xcode` which will create the Xcode Project and open Xcode 8.
+Run `vapor xcode --mysql` which will create the Xcode Project and open Xcode 8.
 
 ![Xcode](https://cloud.githubusercontent.com/assets/1342803/15592631/3e740df8-2373-11e6-8624-3c89260322aa.png)
 
