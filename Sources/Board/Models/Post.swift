@@ -1,5 +1,4 @@
 import Vapor
-import Mustache
 import Fluent
 
 public final class Post: Model {
@@ -36,45 +35,18 @@ extension Post {
             "user_id": userId
         ])
     }
-}
-
-// MARK: Relations
-
-extension Post {
-    func user() throws -> Parent<User> {
-        return try parent(userId, User.self)
+    
+    public func makeLeafNode() throws -> Node {
+        return try Node(node: [
+            "text": text,
+            "user": try user().first()?.makeLeafNode()
+        ])
     }
 }
 
-/**
-	Here, we must make the Post object
-	usable from the Mustache documents,
-	so we have to tell Mustache how this
-	data behaves.
-*/
-extension Post: MustacheBoxable {
-	public var mustacheBox: MustacheBox {
-		return MustacheBox(
-			value: self,
-			boolValue: nil,
-			keyedSubscript: keyedSubscriptFunction,
-			filter: nil,
-			render: nil,
-			willRender: nil,
-			didRender: nil
-		)
-	}
-	
-	func keyedSubscriptFunction(key: String) -> MustacheBox {
-		switch key {
-		case "id":
-			return (id?.int?.mustacheBox)!
-		case "text":
-			return text.mustacheBox
-		case "user":
-			return try! user().get()!.mustacheBox
-		default:
-			return Box()
-		}
-	}
+// MARK: Relations
+extension Post {
+    func user() throws -> Parent<User> {
+        return try parent(userId, nil, User.self)
+    }
 }

@@ -4,5 +4,6 @@
 	"password": "",
 	"database": "vapor_board",
 	"port": 3306,
-	"flag": 0
+	"flag": 0,
+    "encoding": "utf8mb4"
 }

@@ -9,9 +9,9 @@ public final class Application {
     public var drop: Droplet?
 
     public init(testing: Bool = false) {
-        var args = Process.arguments
+        var args = CommandLine.arguments
         if testing {
-            // simulate passing `--env=testing` from the 
+            // Simulate passing `--env=testing` from the 
             // command line if testing is true.
             args.append("--env=testing")
         }

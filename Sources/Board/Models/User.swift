@@ -1,5 +1,4 @@
 import Vapor
-import Mustache
 import Fluent
 
 public final class User: Model {
@@ -28,49 +27,23 @@ extension User {
             "name": name
         ])
     }
+    
+    public func makeLeafNode() throws -> Node {
+        return try Node(node: [
+            "name": name,
+            "postCount": try postCount()
+        ])
+    }
 }
 
 // MARK: Relations
 
 extension User {
     func posts() -> Children<Post> {
-        return children(Post.self)
+        return children(nil, Post.self)
     }
     
     func postCount() throws -> Int {
-        return try children(Post.self).all().count // TODO: Make more efficient? Raw query?
+        return try posts().all().count // TODO: Make more efficient? Raw query?
     }
-}
-
-/**
-	Here, we must make the Post object
-	usable from the Mustache documents,
-	so we have to tell Mustache how this
-	data behaves.
-*/
-extension User: MustacheBoxable {
-	public var mustacheBox: MustacheBox {
-		return MustacheBox(
-			value: self,
-			boolValue: nil,
-			keyedSubscript: keyedSubscriptFunction,
-			filter: nil,
-			render: nil,
-			willRender: nil,
-			didRender: nil
-		)
-	}
-	
-	func keyedSubscriptFunction(key: String) -> MustacheBox {
-		switch key {
-		case "id":
-			return (id?.int?.mustacheBox)!
-		case "name":
-			return name.mustacheBox
-		case "post-count":
-			return try! postCount().mustacheBox
-		default:
-			return Box()
-		}
-	}
 }
