@@ -20,12 +20,12 @@ extension Application {
                 return "Your database is not set up. Please see the README.md."
             }
             
-            guard let version = try database.driver.raw("SELECT @@version AS version")[0].object?["version"].string else {
-                return try JSON(["error": "Could not get database version."])
+            guard let version = try database.driver.raw("SELECT @@version AS version")[0]?.object?["version"]?.string else {
+                return JSON(["error": "Could not get database version."])
             }
             
-            return try JSON([
-                "version": version
+            return JSON([
+                "version": version.makeNode()
             ])
         }
     }

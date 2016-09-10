@@ -5,7 +5,7 @@ extension Post {
 		try database.create(entity) { users in
 			users.id()
 			users.string("text")
-			users.int("user_id")
+			users.parent(User.self, optional: false)
 		}
 	}
 	

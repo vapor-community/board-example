@@ -10,11 +10,11 @@ Check out the [live demo](http://example.qutheory.io) running on Ubuntu.
 [![Slack Status](http://slack.qutheory.io/badge.svg?style=flat-square)](http://slack.qutheory.io)
 
 ## Todo
-[ ] Authentication/login
-[ ] Prettify the frontend
-[ ] Username and text validation
-[ ] Replies (demonstrate sibling relationships)
-[ ] Error page
+- [ ] Authentication/login
+- [ ] Prettify the frontend
+- [ ] Username and text validation
+- [ ] Replies (demonstrate sibling relationships)
+- [ ] Error page
 
 ## Deploy
 

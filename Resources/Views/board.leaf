@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vapor Board</title>
+        
+        #embed("embeds/header")
+	</head>
+	<body>
+		<div class="wrapper">
+			<table id="posts">
+				<thead>
+					<th>Username</th> <!-- TODO: Localize -->
+					<th>Text</th> <!-- TODO: Localize -->
+				</thead>
+				<tbody>
+                    #loop(posts, "post") {
+                        <tr>
+                            <td>
+                                <b><span class="username">#(post.user.name)</span></b>
+                                <span class="post-count">#(post.user.postCount)</span>
+                            </td>
+                            <td>
+                                <p class="post-text">#(post.text)</p>
+                            </td>
+                        </tr>
+                    }
+				</tbody>
+			</table>
+
+			<form class="submit-form" action="/" method="post">
+				<input type="text" id="username-input" name="username" placeholder="Username..."><br/> <!-- TODO: Localize -->
+				<textarea id="text-input" id="text" name="text" placeholder="Text..."></textarea> <!-- TODO: Localize -->
+				<button type="submit">Post</button> <!-- TODO: Localize -->
+			</form>
+		</div>
+	</body>
+</html>

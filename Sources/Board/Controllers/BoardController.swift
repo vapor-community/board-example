@@ -19,10 +19,13 @@ public final class BoardController {
     */
     public func index(_ request: Request) throws -> ResponseRepresentable {
         // Get all the posts
-        let posts = try Post.query().all()
+        let posts = try Post.query().all().map { try $0.makeLeafNode() }
         
         // Render the board with all the posts
-        return try drop.view("board.mustache", context: ["posts": posts])
+        return try drop.view.make(
+            "board",
+            [ "posts": posts.makeNode() ]
+        )
     }
             
     /**
@@ -32,7 +35,7 @@ public final class BoardController {
     */
     public func store(_ request: Request) throws -> ResponseRepresentable {
         // Get the reqeuest data
-        guard let username = request.data["username"].string, let text = request.data["text"].string else {
+        guard let username = request.data["username"]?.string, let text = request.data["text"]?.string else {
             return "Could not get username and text." // TODO: Error page
         }
         
